@@ -1,13 +1,33 @@
 import { useState } from "react"
 import '../css/LoginPage.css';
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
+
+    try {
+      await login({email, password});
+
+      navigate("/profile");
+
+      setEmail('');
+      setPassword('');
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Ett okänt fel uppstod vid inloggning.");
+      }
+    }
   }
 
   return (

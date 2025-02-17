@@ -25,6 +25,9 @@ const Header = () => {
                     <NavLink to="/register" className="nav-link">
                         Registrera
                     </NavLink>
+                    <NavLink to="/profile" className="nav-link">
+                        Profil
+                    </NavLink>
                 </nav>
 
                 {/* Hamburgarmeny (syns endast på små skärmar) */}

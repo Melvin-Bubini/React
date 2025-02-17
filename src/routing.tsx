@@ -2,8 +2,10 @@ import { createBrowserRouter } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import LayoutNotAccess from "./components/LayoutNotaccess";
+import ProfilePage from "./pages/ProfilePage";
+import LayoutNotAccess from "./components/LayoutNotAccess";
 import LayoutAccess from "./components/LayoutAccess";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const router = createBrowserRouter([
     {
@@ -21,6 +23,7 @@ const router = createBrowserRouter([
         element: <LayoutAccess />,
         children: [
             // logged in users
+            { path: "/profile", element: <ProtectedRoute><ProfilePage /></ProtectedRoute> },
         ]
     }
 ]);
