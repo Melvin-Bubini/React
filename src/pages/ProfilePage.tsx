@@ -1,9 +1,7 @@
 import { useAuth } from "../context/AuthContext"
 
 const ProfilePage = () => {
-  const {user} = useAuth();
-
-  console.log("Profilens user:", user);
+  const {user, logout} = useAuth();
 
     if (!user) {
         return <p>Laddar...</p>;
@@ -12,6 +10,7 @@ const ProfilePage = () => {
     <div>
         <h1>Välkommen, {user.name}!</h1>
         <p>E-post: {user.email}</p>
+        <p>Logga ut: <button onClick={logout}>Logga ut</button></p>
     </div>
   )
 }

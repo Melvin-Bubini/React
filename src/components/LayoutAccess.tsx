@@ -1,4 +1,4 @@
-import Header from "./Header"
+import AuthedHeader from "./AuthedHeader"
 import Footer from "./Footer"
 import { Outlet } from "react-router-dom"
 
@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom"
 const LayoutAccess = () => {
   return (
     <>
-      <Header />
+      <AuthedHeader />
 
       <main>
         <Outlet />

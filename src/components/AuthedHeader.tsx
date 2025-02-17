@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import "../css/Header.css";
 
-const Header = () => {
+const AuthedHeader = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
@@ -19,11 +19,11 @@ const Header = () => {
                     <NavLink to="/" className="nav-link">
                         Startsida
                     </NavLink>
-                    <NavLink to="/login" className="nav-link">
-                        Logga in
+                    <NavLink to="/profile" className="nav-link">
+                        Profil
                     </NavLink>
-                    <NavLink to="/register" className="nav-link">
-                        Registrera
+                    <NavLink to="/products" className="nav-link">
+                        Produkter
                     </NavLink>
                 </nav>
 
@@ -42,11 +42,11 @@ const Header = () => {
                     <NavLink to="/" className="mobile-link" onClick={() => setIsMenuOpen(false)}>
                         Startsida
                     </NavLink>
-                    <NavLink to="/login" className="mobile-link" onClick={() => setIsMenuOpen(false)}>
-                        Logga in
+                    <NavLink to="/profile" className="mobile-link" onClick={() => setIsMenuOpen(false)}>
+                        Profil
                     </NavLink>
-                    <NavLink to="/register" className="mobile-link" onClick={() => setIsMenuOpen(false)}>
-                        Registrera
+                    <NavLink to="/products" className="mobile-link" onClick={() => setIsMenuOpen(false)}>
+                        Produkter
                     </NavLink>
                 </nav>
             )}
@@ -54,4 +54,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default AuthedHeader;

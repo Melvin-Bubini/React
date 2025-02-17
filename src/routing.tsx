@@ -3,6 +3,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
+import ProductPage from "./pages/ProductPage";
 import LayoutNotAccess from "./components/LayoutNotAccess";
 import LayoutAccess from "./components/LayoutAccess";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -10,12 +11,14 @@ import ProtectedRoute from "./components/ProtectedRoute";
 const router = createBrowserRouter([
     {
         path: "/",
+        element: <HomePage />,  // startsidan en egen rutt
+    },
+    {
+        path: "/",
         element: <LayoutNotAccess />,
         children: [
-            { path: "/", element: <HomePage /> },
             { path: "/login", element: <LoginPage /> },
-            { path: "/register", element: <RegisterPage /> },
-            { path: "*", element: <HomePage /> },
+            { path: "/register", element: <RegisterPage /> }
         ]
     },
     {
@@ -24,6 +27,7 @@ const router = createBrowserRouter([
         children: [
             // logged in users
             { path: "/profile", element: <ProtectedRoute><ProfilePage /></ProtectedRoute> },
+            { path: "/products", element: <ProtectedRoute><ProductPage /></ProtectedRoute>}
         ]
     }
 ]);
