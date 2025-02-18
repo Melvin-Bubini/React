@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import '../css/LoginPage.css';
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -60,7 +60,7 @@ const LoginPage = () => {
 
           <button type="submit" className="submitBtn"><strong>Logga in</strong></button>
 
-
+          <p>Har du inget konto? <NavLink to="/register">Skapa ett nytt konto</NavLink></p>
         </form>
       </div>
     </div>

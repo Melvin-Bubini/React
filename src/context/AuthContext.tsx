@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, ReactNode, useEffect } from "react";
-import { User, LoginCredentials, AuthContextType, AuthResponse } from "../types/auth.types";
+import { User, LoginCredentials, AuthContextType, AuthResponse, RegisterCredentials } from "../types/auth.types";
 
 // skapa context
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -46,6 +46,32 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setUser(null);
     }
 
+    // registrera användare
+    const register = async (credentials: RegisterCredentials) => {
+        try {
+            const response = await fetch("http://localhost:4000/users/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(credentials),
+            })
+
+            if (!response.ok) {
+                throw new Error("Kunde inte registrera");
+            }
+
+            const data = await response.json() as AuthResponse;
+
+            localStorage.setItem("token", data.token);
+
+            setUser(data.user);
+        } catch (error) {
+            console.log("Register error:", error);
+            throw error;
+        }
+    }
+
     // validera token
     const checkToken = async () => {
         const token = localStorage.getItem("token");
@@ -79,7 +105,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
 
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ user, login, logout, register }}>
             {children}
         </AuthContext.Provider>
     )

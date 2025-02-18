@@ -15,6 +15,11 @@ body {
   width: 100vw;
 }
 
+#root{
+  height: 100%;
+  width: 100%;
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
