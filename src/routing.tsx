@@ -4,30 +4,20 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
 import ProductPage from "./pages/ProductPage";
-import LayoutNotAccess from "./components/LayoutNotAccess";
-import LayoutAccess from "./components/LayoutAccess";
+
 import ProtectedRoute from "./components/ProtectedRoute";
+import DynamicLayout from "./components/DynamicLayout";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <HomePage />,  // startsidan en egen rutt
-    },
-    {
-        path: "/",
-        element: <LayoutNotAccess />,
+        element: <DynamicLayout />, // Byt till DynamicLayout
         children: [
+            { path: "/", element: <HomePage /> },
             { path: "/login", element: <LoginPage /> },
-            { path: "/register", element: <RegisterPage /> }
-        ]
-    },
-    {
-        path: "/",
-        element: <LayoutAccess />,
-        children: [
-            // logged in users
+            { path: "/register", element: <RegisterPage /> },
             { path: "/profile", element: <ProtectedRoute><ProfilePage /></ProtectedRoute> },
-            { path: "/products", element: <ProtectedRoute><ProductPage /></ProtectedRoute>}
+            { path: "/products", element: <ProtectedRoute><ProductPage /></ProtectedRoute> }
         ]
     }
 ]);

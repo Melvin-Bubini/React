@@ -1,5 +1,5 @@
 import "../css/RegisterPage.css"
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 const RegisterPage = () => {
@@ -10,7 +10,7 @@ const RegisterPage = () => {
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
-  const { register, user } = useAuth();
+  const { register } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

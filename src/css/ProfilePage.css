@@ -1,7 +1,7 @@
 .container {
     margin: 0 auto;
     height: 100%;
-    padding: 3em 1em;
+    padding: 3em 0;
     display: flex;
     justify-content: center;
 }
@@ -24,6 +24,20 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.card2 h1 {
+    font-size: clamp(1.5rem, 5vw, 2.5rem); /* Dynamisk textstorlek */
+    color: white;
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+
+.card2 p {
+    font-size: clamp(1rem, 3vw, 1.5rem); /* Anpassar sig till skärmstorlek */
+    color: #ccc;
+    text-align: center;
+    margin-bottom: 1em;
 }
 
 .card2:hover {
