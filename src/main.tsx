@@ -5,11 +5,14 @@ import './index.css'
 import router from './routing.tsx'
 import 'tailwindcss'
 import { AuthProvider } from './context/AuthContext.tsx'
+import { ProductProvider } from './context/ProductContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
-      <RouterProvider router={router} />
+      <ProductProvider>
+        <RouterProvider router={router} />
+      </ProductProvider>
     </AuthProvider>
   </StrictMode>,
 )

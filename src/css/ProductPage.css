@@ -1,0 +1,67 @@
+/* ProductPage.css */
+.product-page {
+    max-width: 1200px;
+    margin: 2em auto;
+    padding: 20px;
+    text-align: center;
+    background-color: #1e1e1e; /* Mörk bakgrund */
+    color: #fff; /* Vit text */
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .loading {
+    font-size: 1.5rem;
+    color: #ffcc00;
+  }
+  
+  /* Grid-layout för produkterna */
+  .product-grid {
+    display: grid;
+    gap: 20px;
+    padding: 20px;
+    justify-items: center;
+  }
+  
+  /* Stil för produktkort */
+  .product-card {
+    background-color: #2a2a2a;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 6px 6px 8px rgb(255 255 255 / 10%);
+    transition: transform 0.3s ease;
+    text-align: left;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .product-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .product-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: #ffffff;
+  }
+  
+  .category {
+    font-style: italic;
+    color: #aaa;
+  }
+  
+  .description {
+    font-size: 0.9rem;
+    color: #ddd;
+  }
+  
+  .price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin-top: 10px;
+  }
+  
