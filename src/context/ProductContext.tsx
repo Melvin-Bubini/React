@@ -49,8 +49,14 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
 
     const editProduct = async (product: Product) => {
         try {
-            const updatedProduct = await updateProduct(product);
-            setProducts(prev => prev.map(p => (p.id === updatedProduct.id ? updatedProduct : p)));
+            const response = await updateProduct(product);
+            const updatedProduct = response.updatedProduct;
+            setProducts(prev => {
+                const newProducts = prev.map(p =>
+                    p.id === updatedProduct.id ? updatedProduct : p
+                );
+                return newProducts;
+            });
         } catch (error) {
             console.error(`Fel vid updatering av produkt med id:${product.id}. Fel:`, error);
         }
@@ -66,13 +72,13 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
     };
 
     return (
-        <ProductContext.Provider value={{products, loading, addProduct, editProduct, removeProduct}} >
+        <ProductContext.Provider value={{ products, loading, addProduct, editProduct, removeProduct }} >
             {children}
         </ProductContext.Provider>
     );
 };
 
-export const useProducts = () : ProductContextType => {
+export const useProducts = (): ProductContextType => {
     const context = useContext(ProductContext);
     if (!context) {
         throw new Error("useProducts måste användas inom en ProductProvider");
