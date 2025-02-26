@@ -6,7 +6,7 @@ import { getProducts, createProduct, deleteProduct, updateProduct } from "../ser
 export interface ProductContextType {
     products: Product[];
     loading: boolean;
-    addProduct: (product: ProductCredentials) => Promise<void>;
+    addProduct: (product: ProductCredentials) => Promise<{ productId: number }>;
     editProduct: (product: Product) => Promise<void>;
     removeProduct: (id: number) => Promise<void>;
 }
@@ -25,7 +25,8 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const data = await getProducts();
+                let data = await getProducts();
+                data = data.sort((a: Product, b: Product) => b.id - a.id);
                 setProducts(data);
             } catch (error) {
                 console.error("Fel vid hämtning av produkter: ", error);
@@ -38,12 +39,14 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
 
 
     // Crud funktionalitet
-    const addProduct = async (product: ProductCredentials) => {
+    const addProduct = async (product: ProductCredentials): Promise<{ productId: number }> => {
         try {
-            const newProduct = await createProduct(product);
-            setProducts(prev => [...prev, newProduct]);
+            const response = await createProduct(product);
+            setProducts(prev => [...prev, { ...product, id: response.productId }]);
+            return { productId: response.productId };
         } catch (error) {
             console.error("Fel vid skapande av produkt:", error);
+            throw new Error("Fel vid skapande av produkt.");
         }
     };
 

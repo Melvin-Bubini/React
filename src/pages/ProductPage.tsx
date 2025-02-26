@@ -2,13 +2,12 @@ import { useState } from "react";
 import { useProducts } from "../context/ProductContext";
 import "../css/ProductPage.css";
 import { Product } from "../types/product.types";
+import { AddProductForm } from "../components/AddProductForm";
 
 const ProductPage = () => {
   const { products, loading, editProduct, removeProduct } = useProducts();
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [updatedProduct, setUpdatedProduct] = useState<Product | null>(null);
-  
-  // Flytta dessa renderingsvillkor till själva render-metoden
 
   // formulärändringar
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -28,7 +27,7 @@ const ProductPage = () => {
   return (
     <div className="product-page">
       <h1 className="title">Produktsidan</h1>
-
+      <AddProductForm />
       {loading ? (
         <h3 className="errorMessage">Laddar produkter...</h3>
       ) : !products.length ? (
@@ -41,7 +40,7 @@ const ProductPage = () => {
               <p className="category">{product.category}</p>
               <p className="description">{product.description}</p>
               <p className="price">{product.price} kr</p>
-              <button className="btn updateBtn" onClick={() => { setEditingProduct(product); setUpdatedProduct({...product}); }}>Ändra</button>
+              <button className="btn updateBtn" onClick={() => { setEditingProduct(product); setUpdatedProduct({ ...product }); }}>Ändra</button>
               <button className="btn deleteBtn" onClick={() => removeProduct(product.id)}>Radera</button>
 
               {editingProduct?.id === product.id && (
