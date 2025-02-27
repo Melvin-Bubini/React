@@ -42,8 +42,10 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
     const addProduct = async (product: ProductCredentials): Promise<{ productId: number }> => {
         try {
             const response = await createProduct(product);
-            setProducts(prev => [...prev, { ...product, id: response.productId }]);
-            return { productId: response.productId };
+            setProducts(prev => {
+                const updatedProducts = [{ ...product, id: response.productId }, ...prev]; // Lägg till ny produkt först
+                return updatedProducts.sort((a, b) => b.id - a.id); // Sortera så att nyast ID hamnar först
+            });            return { productId: response.productId };
         } catch (error) {
             console.error("Fel vid skapande av produkt:", error);
             throw new Error("Fel vid skapande av produkt.");

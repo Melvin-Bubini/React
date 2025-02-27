@@ -88,8 +88,11 @@ export const AddProductForm = () => {
                 placeholder="Pris"
                 required
             />
-            <button className="btn saveBtn" type="submit">Lägg till</button>
-            <button className="btn cancelBtn" type="button" onClick={handleCancel}>Avbryt</button>
+            <div>
+                <button className="btn saveBtn" type="submit">Lägg till</button>
+                <button className="btn cancelBtn" type="button" onClick={handleCancel}>Avbryt</button>
+            </div>
+
         </form>
     );
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useProducts } from "../context/ProductContext";
 import "../css/ProductPage.css";
 import { Product } from "../types/product.types";
@@ -8,6 +8,7 @@ const ProductPage = () => {
   const { products, loading, editProduct, removeProduct } = useProducts();
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [updatedProduct, setUpdatedProduct] = useState<Product | null>(null);
+  const [showForm, setShowForm] = useState(false);
 
   // formulärändringar
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -24,10 +25,15 @@ const ProductPage = () => {
     }
   };
 
+  const toogleForm = () => {
+    setShowForm(prev => !prev);
+  }
+
   return (
     <div className="product-page">
       <h1 className="title">Produktsidan</h1>
-      <AddProductForm />
+      <button className={showForm ? "btn cancelBtn" : "btn saveBtn"} onClick={toogleForm}>{showForm ? "Stäng" : "Lägg till"}</button>
+      {showForm && <AddProductForm />}
       {loading ? (
         <h3 className="errorMessage">Laddar produkter...</h3>
       ) : !products.length ? (
@@ -49,8 +55,11 @@ const ProductPage = () => {
                   <input type="text" name="category" value={updatedProduct?.category || ""} onChange={handleChange} />
                   <textarea name="description" value={updatedProduct?.description || ""} onChange={handleChange} />
                   <input type="number" name="price" value={updatedProduct?.price || ""} onChange={handleChange} />
-                  <button className="btn saveBtn" onClick={handleUpdate}>Spara</button>
-                  <button className="btn cancelBtn" onClick={() => setEditingProduct(null)}>Avbryt</button>
+                  <div>
+                    <button className="btn saveBtn" onClick={handleUpdate}>Spara</button>
+                    <button className="btn cancelBtn" onClick={() => setEditingProduct(null)}>Avbryt</button>
+                  </div>
+
                 </div>
               )}
             </div>
