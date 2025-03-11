@@ -7,6 +7,13 @@ export const AddProductForm = () => {
     const { addProduct } = useProducts();
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+
+    // Felmeddelanden för varje inputfält
+    const [nameError, setNameError] = useState("");
+    const [categoryError, setCategoryError] = useState("");
+    const [descriptionError, setDescriptionError] = useState("");
+    const [priceError, setPriceError] = useState("");
+
     const [product, setProduct] = useState<ProductCredentials>({
         name: "",
         category: "",
@@ -15,14 +22,54 @@ export const AddProductForm = () => {
     });
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const value = e.target.name === "price" ? Number(e.target.value) : e.target.value;
-        setProduct({ ...product, [e.target.name]: value });
+        const { name, value } = e.target;
+        const newValue = name === "price" ? Number(value) : value;
+        setProduct({ ...product, [name]: newValue });
+    };
+
+    // Valideringsfunktion
+    const validateForm = () => {
+        let isValid = true;
+
+        if (product.name.trim().length < 3) {
+            setNameError("Namnet måste vara minst 3 tecken.");
+            isValid = false;
+        } else {
+            setNameError("");
+        }
+
+        if (product.category.trim().length < 3) {
+            setCategoryError("Kategorin måste vara minst 3 tecken.");
+            isValid = false;
+        } else {
+            setCategoryError("");
+        }
+
+        if (product.description.length > 200) {
+            setDescriptionError("Beskrivning får max vara 200 tecken.");
+            isValid = false;
+        } else {
+            setDescriptionError("");
+        }
+
+        if (product.price <= 0) {
+            setPriceError("Priset måste vara ett positivt nummer.");
+            isValid = false;
+        } else {
+            setPriceError("");
+        }
+
+        return isValid;
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError("");
         setSuccess("");
+
+        if (!validateForm()) {
+            return;
+        }
 
         try {
             const response = await addProduct(product);
@@ -51,12 +98,17 @@ export const AddProductForm = () => {
         });
         setError("");
         setSuccess("");
+        setNameError("");
+        setCategoryError("");
+        setDescriptionError("");
+        setPriceError("");
     };
 
     return (
         <form className="edit-form" onSubmit={handleSubmit}>
             {error && <div className="errorMessage">{error}</div>}
             {success && <div className="successMessage">{success}</div>}
+
             <input
                 type="text"
                 name="name"
@@ -65,6 +117,8 @@ export const AddProductForm = () => {
                 placeholder="Produktnamn"
                 required
             />
+            {nameError && <p className="error-text">{nameError}</p>}
+
             <input
                 type="text"
                 name="category"
@@ -73,6 +127,8 @@ export const AddProductForm = () => {
                 placeholder="Kategori"
                 required
             />
+            {categoryError && <p className="error-text">{categoryError}</p>}
+
             <textarea
                 name="description"
                 value={product.description}
@@ -80,6 +136,8 @@ export const AddProductForm = () => {
                 placeholder="Beskrivning"
                 required
             />
+            {descriptionError && <p className="error-text">{descriptionError}</p>}
+
             <input
                 type="number"
                 name="price"
@@ -88,11 +146,12 @@ export const AddProductForm = () => {
                 placeholder="Pris"
                 required
             />
+            {priceError && <p className="error-text">{priceError}</p>}
+
             <div>
                 <button className="btn saveBtn" type="submit">Lägg till</button>
                 <button className="btn cancelBtn" type="button" onClick={handleCancel}>Avbryt</button>
             </div>
-
         </form>
     );
 };
